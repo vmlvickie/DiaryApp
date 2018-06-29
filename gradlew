@@ -170,3 +170,5 @@ if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
 fi
 
 exec "$JAVACMD" "$@"
+
+git update-index --chmod=+x gradlew
