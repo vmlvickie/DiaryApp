@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".com.project.vickie.diaryapp.db.AddItem"
+    tools:showIn="@layout/activity_add_item"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/etActivity"
+        android:layout_marginTop="41dp"
+        android:text="@string/dateLbl"
+        android:textSize="14sp" />
+
+    <GridLayout
+        android:id="@+id/gLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="69dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/etDate"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/margin_left_in"
+            android:ems="10"
+            android:hint="@string/et_date"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/btnDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:onClick="showDatePicker"
+            android:text="@string/calendar_btn_text" />
+
+    </GridLayout>
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="@dimen/etWidth"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="149dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/et_title" />
+
+    <TextView
+        android:id="@+id/tvActivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etActivity"
+        android:layout_alignStart="@+id/textView2"
+        android:text="@string/tv_activityLbl" />
+
+    <EditText
+        android:id="@+id/etActivity"
+        android:layout_width="@dimen/etWidth"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="122dp"
+        android:ems="10"
+        android:hint="@string/et_activity"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btnAddItem"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="199dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="43dp"
+        android:onClick="onAddItemClick"
+        android:text="@string/addDiaryEntryBtnText" />
+
+
+
+
+</RelativeLayout>
