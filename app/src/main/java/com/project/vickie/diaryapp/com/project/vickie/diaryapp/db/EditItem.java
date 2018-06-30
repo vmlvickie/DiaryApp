@@ -2,6 +2,7 @@ package com.project.vickie.diaryapp.com.project.vickie.diaryapp.db;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,26 +15,26 @@ import android.widget.Toast;
 
 import com.project.vickie.diaryapp.Diary;
 import com.project.vickie.diaryapp.R;
+import com.project.vickie.diaryapp.dto.Item;
 
 import java.util.Calendar;
 
-public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class EditItem extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
+    int itemId;
     DatabaseHelper dbHelper;
+    DatePickerDialog datePickerDialog;
+
+    EditText etTitle;
     EditText etDate;
     EditText etActivity;
-    EditText etTitle;
-
-    DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_edit_item);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        dbHelper = new DatabaseHelper(this);
 
         datePickerDialog = new DatePickerDialog(
                 this, this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
@@ -44,33 +45,47 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 datePickerDialog.show();
             }
-
         });
-        etActivity = (EditText) findViewById(R.id.etActivity);
         etTitle = (EditText) findViewById(R.id.etTitle);
+        etActivity = (EditText) findViewById(R.id.etActivity);
+
+        dbHelper = new DatabaseHelper(this);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            itemId = (int) bundle.get("EDIT_ITEM_ID");
+            Cursor c = dbHelper.getDiaryEntry(itemId);
+
+            initializeComponents(getItem(c));
+        }
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        //extrac selected date
-        String dateString = view.getDayOfMonth() + "/" + view.getMonth() + "/" + view.getYear();
-
-        etDate.setText(dateString);
+    private void initializeComponents(Item item) {
+        etDate.setText(item.getDate());
+        etTitle.setText(item.getTitle());
+        etActivity.setText(item.getActivity());
     }
 
-
-    public void showDatePicker(View view){
-        datePickerDialog.show();
+    public Item getItem(Cursor c) {
+        Item item= null;
+        while (c.moveToNext()) {
+            item = new Item(
+                    c.getInt(c.getColumnIndexOrThrow("_id")),
+                    c.getString(c.getColumnIndexOrThrow("date")),
+                    c.getString(c.getColumnIndexOrThrow("title")),
+                    c.getString(c.getColumnIndexOrThrow("activity"))
+            );
+        }
+        return item;
     }
 
-    public void onAddItemClick(View view){
+    public void onSaveItemClick(View view){
         String date = etDate.getText().toString();
         String title = etTitle.getText().toString();
         String activity = etActivity.getText().toString();
 
         if(date.replace("//s", "").equalsIgnoreCase("")){
             //Date cannot be blank
-            showFeedBack("You have to select Date");
+            showFeedBack("You have to enter Date");
             return;
         }
 
@@ -87,26 +102,31 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         }
 
         //else Save details
-        long row = dbHelper.saveDiaryEntry(date, title, activity);
+        long row = dbHelper.editJournalEntry(itemId, date, title, activity);
         if(row > 0){
-            clearFields();
-            showFeedBack("Entry saved!");
+            showFeedBack("Saved");
             backToDiaryActivity();
         }
-
     }
 
-    private void clearFields() {
-        etDate.setText("");
-        etActivity.setText("");
+    public void onClickCancel(View view){
+        finish();
+            //backToDiaryActivity();
+    }
+
+    private void backToDiaryActivity() {
+        startActivity(new Intent(this, Diary.class));
+        finish();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            //extrac selected date
+            String dateString = view.getDayOfMonth() + "/" + view.getMonth() + "/" + view.getYear();
+            etDate.setText(dateString);
     }
 
     public void showFeedBack(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void backToDiaryActivity(){
-        startActivity(new Intent(this, Diary.class));
-        finish();
     }
 }

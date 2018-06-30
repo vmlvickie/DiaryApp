@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,12 +23,17 @@ import com.project.vickie.diaryapp.com.project.vickie.diaryapp.db.DatabaseHelper
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    GoogleSignInOptions googleSignInOptions;
+    GoogleSignInClient googleLogInClient;
+
+
+
     DatabaseHelper helper = null;
     CheckDB checkDB = null;
 
     EditText etUsername;
     EditText etPassword;
-    GoogleSignInClient googleLogInClient = null;
+
 
     private int LOG_IN_CODE = 17;
     public String TAG = "com.project.vickie.diaryapp";
@@ -44,8 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        /* etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);*/
 
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().build();
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
         googleLogInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
         SignInButton signInButton = findViewById(R.id.sign_in_button);
@@ -91,12 +99,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void logIn() {
         Intent logInIntent = googleLogInClient.getSignInIntent();
+
         startActivityForResult(logInIntent, LOG_IN_CODE);
     }
 
     @Override
     public void onActivityResult(int rqstCode, int resultCode, Intent data) {
         super.onActivityResult(rqstCode, resultCode, data);
+        Log.d(TAG, "rqstCode:"+rqstCode+" LOG_IN_CODE:"+LOG_IN_CODE);
         if (rqstCode == LOG_IN_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
@@ -108,8 +118,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             logInSuccessful(account);
         } catch (ApiException e) {
-            Log.w(TAG, "Log in Failed. Returned code: " + e.getStatusCode());
-            logInSuccessful(null);
+            /*Log.w(TAG, "Log in Failed. Returned code: " + e.getStatusCode());*/
+            e.printStackTrace();
+            //logInSuccessful(null);
+            Toast.makeText(this, "Sign In Unsuccesful", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,5 +133,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, Diary.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        logInSuccessful(account);
     }
 }

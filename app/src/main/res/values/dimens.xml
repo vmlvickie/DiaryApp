@@ -1,5 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_right">10dp</dimen>
     <dimen name="margin_left_in">0dp</dimen>
     <dimen name="margin_left">10dp</dimen>
@@ -9,5 +10,7 @@
     <dimen name="txtSize">16dp</dimen>
     <dimen name="margin_left_rv">5dp</dimen>
     <dimen name="margin_right_rv">5dp</dimen>
+    <dimen name="padding">16dp</dimen>
+    <dimen name="min_activity_width">100dp</dimen>
 
 </resources>

@@ -21,14 +21,23 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
-    RecyclerView recyclerView;
-    List<Item> itemsList;
-    Context context;
+    private RecyclerView recyclerView;
+    private List<Item> itemsList;
+    private Context context;
 
-    public RecyclerViewAdapter(List<Item> itemList, Context context, RecyclerView rcView) {
+    private RecyclerViewAdapterOnClickHandler mClickHandler;
+
+    public interface RecyclerViewAdapterOnClickHandler {
+        void onClick(int itemPosition);
+    }
+
+
+
+    public RecyclerViewAdapter(List<Item> itemList, Context context, RecyclerView rcView, RecyclerViewAdapterOnClickHandler clickHandler) {
         this.context = context;
         this.itemsList = itemList;
         this.recyclerView = rcView;
+        this.mClickHandler = clickHandler;
     }
 
     @NonNull
@@ -36,9 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.single_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -46,53 +53,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Item item = itemsList.get(position);
         holder.tv_date.setText(item.getDate());
         holder.tv_title.setText(item.getTitle());
-
-        //listen to single view layout click
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //allow user to view Diary entry
-
-                Intent i = new Intent(context, ViewItemEntry.class);
-                i.putExtra("CLICKED_ITEM_ID",  position);
-                context.startActivity(i);//getApplicationContext().
-
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Choose option");
-                builder.setMessage("Update or delete user?");
-                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        //go to update activity
-                       // editItemEntry(item.getId());
-
-                    }
-                });
-                builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DatabaseHelper dbHelper = new DatabaseHelper(context);
-                        //dbHelper.deleteItem(item.getId(), context);
-
-                        itemsList.remove(position);
-                        recyclerView.removeViewAt(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, itemsList.size());
-                        notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();*/
-            }
-        });
-
     }
 
     @Override
@@ -100,17 +60,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return itemsList.size();
     }
 
-    public class ViewHolder extends  RecyclerView.ViewHolder{
+    public class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tv_date;
         TextView tv_title;
         FrameLayout single_row;
         public View layout;
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
             tv_date = itemView.findViewById(R.id.tv_date);
             tv_title = itemView.findViewById(R.id.tv_title);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onClick(adapterPosition);
         }
     }
 }

@@ -9,15 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
-    String TABLE_USERS = "users";
-    String ID = "_id";
-    String FIRST_NAME = "firstName";
-    String LAST_NAME = "lastName";
-    String USERNAME = "username";
-    String EMAIL = "email";
-    String PASSWORD = "password";
-    String TABLE_DIARY = "diary";
-    CreateDatabase dbCreator;
+    private String TABLE_USERS = "users";
+    private String ID = "_id";
+    private String FIRST_NAME = "firstName";
+    private String LAST_NAME = "lastName";
+    private String USERNAME = "username";
+    private String EMAIL = "email";
+    private String PASSWORD = "password";
+    private String TABLE_DIARY = "diary";
+    private  CreateDatabase dbCreator;
 
     public DatabaseHelper(Context context) {
         super(context, "diary.db", null, DATABASE_VERSION);
@@ -86,10 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean emailUserExists(String email) {
         String sql = "SELECT " + ID + " FROM " + TABLE_USERS + " WHERE " + EMAIL + " = '" + email + "'";
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-        if (cursor.getCount() > 0) {
-            return true;
-        }
-        return false;
+        return cursor.getCount() > 0;
     }
 
     //get diary logs
@@ -131,6 +128,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("title", title);
         values.put("activity", activity);
         return db.insert(TABLE_DIARY, null, values);
+    }
+
+    public long editJournalEntry(int id, String date, String title, String activity) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("date", date);
+        values.put("title", title);
+        values.put("activity", activity);
+        return db.update(TABLE_DIARY, values, "_id = " + id, null);
+    }
+
+    public long deleteJournalEntry(int itemId){
+        SQLiteDatabase db = getWritableDatabase();
+            return db.delete(TABLE_DIARY, "_id = " + itemId, null);
     }
 
 }

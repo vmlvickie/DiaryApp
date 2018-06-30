@@ -33,6 +33,10 @@
         <activity
             android:name=".ViewItemEntry"
             android:label="@string/title_activity_view_item_entry"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".com.project.vickie.diaryapp.db.EditItem"
+            android:label="@string/title_activity_edit_item"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

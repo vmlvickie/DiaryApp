@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".com.project.vickie.diaryapp.db.AddItem"
-    tools:showIn="@layout/activity_add_item"
-    android:orientation="vertical">
+    tools:context=".com.project.vickie.diaryapp.db.EditItem"
+    tools:showIn="@layout/activity_edit_item">
 
     <EditText
         android:id="@+id/etDate"
@@ -51,18 +50,31 @@
         android:ems="10"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/btnAddItem"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="199dp"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="175dp"
-        android:onClick="onAddItemClick"
-        android:text="@string/addDiaryEntryBtnText" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="174dp">
 
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="66dp"
+            android:text="@string/saveDiaryEntryBtnText"
+            android:onClick="onSaveItemClick"/>
 
-
-
+        <Button
+            android:id="@+id/btnDeleteItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="59dp"
+            android:onClick="onClickCancel"
+            android:text="@string/btn_cancel" />
+    </RelativeLayout>
 </RelativeLayout>
