@@ -90,8 +90,8 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
         long row = dbHelper.saveDiaryEntry(date, title, activity);
         if(row > 0){
             clearFields();
-            showFeedBack("Entry saved!");
             backToDiaryActivity();
+            showFeedBack("Entry saved.");
         }
 
     }
