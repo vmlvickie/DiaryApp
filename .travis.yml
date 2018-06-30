@@ -18,6 +18,10 @@ android:
     - extra-android-m2repository
     - extra-google-m2repository
     - addon-google_apis-google-23
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 before_install:
 - chmod +x gradlew 
 - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
