@@ -1,0 +1,30 @@
+language: android 
+jdk: 
+  - oraclejdk8
+env:
+  global:
+    - COMPILE_SDK_VERSION=27 # Same as `compileSdkVersion` in build.gradle
+    - EMULATOR_API=22
+    - BUILD_TOOLS_VERSION=27.0.2 # Same as `buildToolsVersion` in build.gradle
+    - ABI=armeabi-v7a # ARM ABI v7a by default
+    - ADB_INSTALL_TIMEOUT=5 # minutes
+android: 
+  components: 
+    - tools
+    - build-tools-23.0.0
+    - android-23
+    - Extra-android-support
+    - extra-google-google_play_services
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - addon-google_apis-google-23
+before_install:
+- chmod +x gradlew 
+- export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+- export JAVA_HOME=$JAVA8_HOME 
+after_success: 
+- chmod +x ./upload-gh-pages.sh 
+- ./upload-apk.sh 
+script: 
+- ls /usr/lib/jvm/
+- ./gradlew build
