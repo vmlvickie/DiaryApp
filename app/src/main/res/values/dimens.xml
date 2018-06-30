@@ -12,5 +12,7 @@
     <dimen name="margin_right_rv">5dp</dimen>
     <dimen name="padding">16dp</dimen>
     <dimen name="min_activity_width">100dp</dimen>
+    <dimen name="margin_left_land">10dp</dimen>
+    <dimen name="margin_right_land">10dp</dimen>
 
 </resources>

@@ -73,8 +73,9 @@ public class Diary extends AppCompatActivity  implements RecyclerViewAdapter.Rec
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Add Entry", Snackbar.LENGTH_LONG)
-                        .setAction("Action", addDiaryItem()).show();
+/*                Snackbar.make(view, "Add Entry", Snackbar.LENGTH_LONG)
+                        .setAction("Action", addDiaryItem()).show();*/
+                addDiaryItem();
             }
         });
     }
