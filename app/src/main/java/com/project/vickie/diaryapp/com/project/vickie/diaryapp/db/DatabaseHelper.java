@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //get diary logs
     public Cursor getDiaryEntries() {
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT _id, date, title, activity FROM " + TABLE_DIARY;
+        String sql = "SELECT _id, date, title, activity FROM " + TABLE_DIARY + " ORDER BY date ASC";
         return db.rawQuery(sql, null);
     }
     public Cursor getDiaryEntry(int id) {

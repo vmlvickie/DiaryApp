@@ -7,7 +7,7 @@
     <string name="btnRegister">Register</string>
     <string name="tvOr">Or</string>
     <string name="title_activity_diary">Journals</string>
-    <string name="title_activity_add_item">AddItem</string>
+    <string name="title_activity_add_item">Add Journal</string>
     <string name="addDiaryEntryBtnText">Add</string>
     <string name="saveDiaryEntryBtnText">Save</string>
     <string name="editDiaryEntryBtnText">Edit</string>
