@@ -139,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        logInSuccessful(account);
+        if(account != null){
+            logInSuccessful(account);
+        }        
     }
 }
