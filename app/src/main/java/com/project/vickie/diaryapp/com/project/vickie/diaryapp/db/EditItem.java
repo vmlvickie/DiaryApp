@@ -110,8 +110,8 @@ public class EditItem extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     public void onClickCancel(View view){
-        finish();
-            //backToDiaryActivity();
+       /* finish();*/
+       backToDiaryActivity();
     }
 
     private void backToDiaryActivity() {
