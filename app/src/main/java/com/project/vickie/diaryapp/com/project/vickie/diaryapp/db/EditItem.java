@@ -115,8 +115,9 @@ public class EditItem extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     private void backToDiaryActivity() {
-        startActivity(new Intent(this, Diary.class));
         finish();
+        startActivity(new Intent(this, Diary.class));
+
     }
 
     @Override

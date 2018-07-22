@@ -106,7 +106,7 @@ public class AddItem extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void backToDiaryActivity(){
-        startActivity(new Intent(this, Diary.class));
         finish();
+        startActivity(new Intent(this, Diary.class));
     }
 }

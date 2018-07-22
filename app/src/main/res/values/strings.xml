@@ -3,8 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="signInLbl">Sign In using your google account</string>
     <string name="hintUsername">Username</string>
+    <string name="hintEmail">Email address</string>
     <string name="hintPassword">Password</string>
-    <string name="btnRegister">Register</string>
+    <string name="btnRegister">Already registered? Sign In.</string>
+    <string name="tvSignin">Already registered? Sign In.</string>
+    <string name="tvRegister">Register</string>
     <string name="tvOr">Or</string>
     <string name="title_activity_diary">Journals</string>
     <string name="title_activity_add_item">Add Journal</string>
@@ -25,4 +28,8 @@
     <string name="no_data_available">No entries currently available.</string>
     <string name="date_label">Date Here</string>
     <string name="title_label">Title Here</string>
+    <string name="tvSignInLabel">Sign In.</string>
+    <string name="hintConfirmPassword">Confirm password</string>
+    <string name="tvRegisterLabel">Registration</string>
+    <string name="action_logout">Sign Out</string>
 </resources>

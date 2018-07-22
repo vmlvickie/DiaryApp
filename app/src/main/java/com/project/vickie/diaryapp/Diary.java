@@ -11,11 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.vickie.diaryapp.com.project.vickie.diaryapp.db.AddItem;
 import com.project.vickie.diaryapp.com.project.vickie.diaryapp.db.DatabaseHelper;
 import com.project.vickie.diaryapp.dto.Item;
@@ -38,6 +41,8 @@ public class Diary extends AppCompatActivity  implements RecyclerViewAdapter.Rec
 
     TextView empty_view;
 
+    FirebaseAuth firebaseAuth;
+
 
 
 
@@ -47,6 +52,14 @@ public class Diary extends AppCompatActivity  implements RecyclerViewAdapter.Rec
         setContentView(R.layout.activity_diary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            Intent i = new Intent(this, LogInActivity.class);
+            startActivity(i);
+        }
 
         dbHelper = new DatabaseHelper(this);
         Cursor c = dbHelper.getDiaryEntries();
@@ -96,6 +109,7 @@ public class Diary extends AppCompatActivity  implements RecyclerViewAdapter.Rec
     }
 
     private View.OnClickListener addDiaryItem() {
+        finish();
         Intent intent = new Intent(this, AddItem.class);
         startActivity(intent);
 
@@ -111,4 +125,27 @@ public class Diary extends AppCompatActivity  implements RecyclerViewAdapter.Rec
         i.putExtra("CLICKED_ITEM_ID",  itemList.get(itemPosition).getId());
         this.startActivity(i);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //get clicked item id
+        int id = item.getItemId();
+
+        //Log out user
+        if (id == R.id.action_logout) {
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(this, LogInActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_diary, menu);
+        return true;
+    }
+
 }

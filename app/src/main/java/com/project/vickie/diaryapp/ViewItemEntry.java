@@ -88,6 +88,7 @@ public class ViewItemEntry extends AppCompatActivity {
     }
 
     public void onClickEdit(View view){
+        finish();
         Intent i = new Intent(this, EditItem.class);
         i.putExtra("EDIT_ITEM_ID", itemId);
         startActivity(i);
@@ -97,14 +98,14 @@ public class ViewItemEntry extends AppCompatActivity {
         if(affectedRow > 0){
             showFeedBack("Entry was removed");
             backToDiaryActivity();
-            finish();
+
         }
     }
     public void showFeedBack(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
     private void backToDiaryActivity() {
-        startActivity(new Intent(this, Diary.class));
         finish();
+        startActivity(new Intent(this, Diary.class));
     }
 }

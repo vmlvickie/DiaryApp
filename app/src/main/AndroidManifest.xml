@@ -37,7 +37,8 @@
         <activity
             android:name=".com.project.vickie.diaryapp.db.EditItem"
             android:label="@string/title_activity_edit_item"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LogInActivity"></activity>
     </application>
 
 </manifest>
